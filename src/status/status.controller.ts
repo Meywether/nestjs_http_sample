@@ -9,8 +9,6 @@ export class StatusController {
     private readonly configService: ConfigService,
     @Inject('MICROSERVICE_1')
     private ms1: ClientProxy,
-    @Inject('MICROSERVICE_2')
-    private ms2: ClientProxy,
   ) {}
 
   @Get()
@@ -25,11 +23,6 @@ export class StatusController {
       .send<StatusDTO, string>('getMS1Status', '')
       .toPromise();
     allStatus.push(mailStatus);
-
-    const userStatus = await this.ms2
-      .send<StatusDTO, string>('getMS2Status', '')
-      .toPromise();
-    allStatus.push(userStatus);
 
     const dto = new DataResponseDto();
     dto.statusCode = 200;
