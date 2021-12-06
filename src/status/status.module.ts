@@ -17,26 +17,28 @@ import {
         const options = <RedisOptions>{
           transport: Transport.REDIS,
           options: {
-            url: configService.get('redis_url'),
+            host: configService.get<string>('redis_host'),
+            port: configService.get<number>('redis_port'),
+            auth_pass: configService.get<string>('redis_password'),
           },
         };
         return ClientProxyFactory.create(options);
       },
       inject: [ConfigService],
     },
-    {
-      provide: 'MICROSERVICE_2',
-      useFactory: (configService: ConfigService) => {
-        const options = <RedisOptions>{
-          transport: Transport.REDIS,
-          options: {
-            url: configService.get('redis_url'),
-          },
-        };
-        return ClientProxyFactory.create(options);
-      },
-      inject: [ConfigService],
-    },
+    // {
+    //   provide: 'MICROSERVICE_2',
+    //   useFactory: (configService: ConfigService) => {
+    //     const options = <RedisOptions>{
+    //       transport: Transport.REDIS,
+    //       options: {
+    //         url: configService.get('redis_url'),
+    //       },
+    //     };
+    //     return ClientProxyFactory.create(options);
+    //   },
+    //   inject: [ConfigService],
+    // },
   ],
   controllers: [StatusController],
 })
